@@ -1,0 +1,39 @@
+install.packages("ggfortify")
+install.packages("fpp2")
+
+library(ggfortify)
+library(fpp2)
+
+# plotando série temporal do preço do ouro
+autoplot(gold)
+
+# produção trimetral de fio de lã na Austrália [em toneladas]
+autoplot(woolyrnq)
+
+# produção mensal de gás na Austrália 
+autoplot(gas)
+
+# produção de eletricidade [30 em 30 minutos]
+autoplot(taylor)
+
+# número de armadilhas para capturar Lince no Canadá
+data(lynx); trapped <- lynx
+autoplot(trapped)
+
+# descobrir tendência
+trapped.time <- time(trapped)
+trapped.lm <- lm(trapped ~ trapped.time)
+summary(trapped.lm)
+
+# de acordo com o modelo, houve um aumento de 3,39 
+# armadilhas por ano, contudo esse parâmetro não foi 
+# significante, indicando que não há tendência.
+
+# descobrir ciclos
+ma10 <- filter(x=trapped, filter=rep(x=1/10,times=10), sides=2)
+ma5 <- filter(x=trapped, filter=rep(x=1/5,times=5), sides=2)
+plot(trapped,col="grey", ylab = "Lynx Trapped", xlab = "Year")
+lines(ma10,col="red",lwd=2)
+lines(ma5,col="purple",lwd=2)
+legend("topright", c(" Média móvel dos últimos 5 anos", "Média móvel dos últimos 10 anos"), bty = "n", col = c("purple","red"), pch = 15)
+abline(trapped.lm, col="black",lwd=2, lty="dashed")
