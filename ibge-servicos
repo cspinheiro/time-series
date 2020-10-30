@@ -1,0 +1,19 @@
+install.packages("ggfortify")
+install.packages("fpp2")
+install.packages("BETS")
+
+library(ggfortify)
+library(fpp2)
+library(BETS)
+
+# DADOS DO IBGE - Instituto Brasileiro de Geografia e Estatística
+# PMS - Pesquisa Mensal de Serviços (Total)
+# últimos 10 anos
+
+pms <- BETSget(code = 21637)
+
+autoplot(pms)
+
+monthplot(pms)
+
+ggseasonplot(pms, polar = T)
